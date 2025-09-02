@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { supabase } from "@/lib/supabaseClient";
-import { CiTrophy } from "react-icons/ci";
 
 type FormData = {
   schoolName: string;
@@ -94,9 +93,14 @@ export default function SMSForm() {
       alert("School added successfully!");
       reset();
       setPreview(null);
-    } catch (error: any) {
-      console.error("Error adding school:", error?.message || error);
-      alert("Failed to add school. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error adding school:", error.message);
+        alert("Failed to add school. Please try again.");
+      } else {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

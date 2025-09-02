@@ -3,7 +3,6 @@ import React from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 export default async function SchoolData() {
-  // Sample data for demonstration
   const { data: schools, error } = await supabase.from("schools").select("*");
 
   console.log("schools:", schools);
