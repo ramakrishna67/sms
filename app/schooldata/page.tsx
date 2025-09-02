@@ -51,6 +51,12 @@ export default async function SchoolData() {
                   <p>
                     <strong>Email:</strong> {s.email}
                   </p>
+                  <p>
+                    <strong>City:</strong> {s.city}
+                  </p>
+                  <p>
+                    <strong>State:</strong> {s.state}
+                  </p>
                 </CardContent>
               </div>
             </Card>

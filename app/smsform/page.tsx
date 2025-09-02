@@ -11,12 +11,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { supabase } from "@/lib/supabaseClient";
+import { CiTrophy } from "react-icons/ci";
 
 type FormData = {
   schoolName: string;
   email: string;
   phoneNumber: string;
   address: string;
+  city: string;
+  state: string;
   image: FileList;
 };
 
@@ -67,6 +70,8 @@ export default function SMSForm() {
           email: data.email,
           phone_number: data.phoneNumber,
           address: data.address,
+          city: data.city,
+          state: data.state,
           image_url: imageUrl,
         },
       ]);
@@ -76,8 +81,8 @@ export default function SMSForm() {
       alert("School added successfully!");
       reset();
       setPreview(null);
-    } catch (error) {
-      console.error("Error adding school:", error);
+    } catch (error: any) {
+      console.error("Error adding school:", error?.message || error);
       alert("Failed to add school. Please try again.");
     }
   };
@@ -172,6 +177,30 @@ export default function SMSForm() {
                     {errors.address.message as string}
                   </p>
                 )}
+              </div>
+
+              {/* City*/}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="city" className="font-medium">
+                  City
+                </label>
+                <input
+                  id="city"
+                  {...register("city", { required: "City is required" })}
+                  className="border p-2 rounded"
+                />
+              </div>
+
+              {/* State*/}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="state" className="font-medium">
+                  State
+                </label>
+                <input
+                  id="state"
+                  {...register("state", { required: "State is required" })}
+                  className="border p-2 rounded"
+                />
               </div>
 
               {/* Photo Upload*/}
