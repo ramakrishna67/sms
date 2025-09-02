@@ -49,31 +49,31 @@ export default function SMSForm() {
 
       if (data.image && data.image[0]) {
         const file = data.image[0];
-        // const filePath = `school-images/${Date.now()}-${file.name}`;
+        const filePath = `school-images/${Date.now()}-${file.name}`;
 
-        // const { error: uploadError } = await supabase.storage
-        //   .from("school-images")
-        //   .upload(filePath, file);
-        // if (uploadError) {
-        //   throw uploadError;
-        // }
-        // const { data: publicUrlData } = supabase.storage
-        //   .from("school-images")
-        //   .getPublicUrl(filePath);
-        // imageUrl = publicUrlData?.publicUrl || null;
-
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/api/uploadsImages", {
-          method: "POST",
-          body: formData,
-        });
-        const resData = await res.json();
-        if (res.ok) {
-          imageUrl = resData.url;
-        } else {
-          throw new Error(resData.error || "Image upload failed");
+        const { error: uploadError } = await supabase.storage
+          .from("school-images")
+          .upload(filePath, file);
+        if (uploadError) {
+          throw uploadError;
         }
+        const { data: publicUrlData } = supabase.storage
+          .from("school-images")
+          .getPublicUrl(filePath);
+        imageUrl = publicUrlData?.publicUrl || null;
+
+        // const formData = new FormData();
+        // formData.append("file", file);
+        // const res = await fetch("/api/uploadsImages", {
+        //   method: "POST",
+        //   body: formData,
+        // });
+        // const resData = await res.json();
+        // if (res.ok) {
+        //   imageUrl = resData.url;
+        // } else {
+        //   throw new Error(resData.error || "Image upload failed");
+        // }
       }
 
       const { error: insertError } = await supabase.from("schools").insert([
