@@ -2,16 +2,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import { supabaseServer } from "@/lib/supabaseServer";
 
+export const dynamic = "force-dynamic";
+
 export default async function SchoolData() {
   const { data: schools, error } = await supabaseServer
     .from("schools")
-    .select("*")
-    .order("id", { ascending: true });
+    .select("*");
+  // .order("id", { ascending: true });
 
   console.log("schools:", schools);
 
   if (error) {
     return <p className="text-red-500">Failed to fetch schools</p>;
+  }
+
+  if (!schools || schools.length === 0) {
+    return <p className="text-gray-500 text-center">No schools found</p>;
   }
 
   return (
@@ -23,6 +29,7 @@ export default async function SchoolData() {
             View schools information
           </p>
         </header>
+
         <section className="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 p-3">
           {schools.map((s) => (
             <Card key={s.id} className="overflow-hidden">
