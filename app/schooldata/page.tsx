@@ -1,9 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export default async function SchoolData() {
-  const { data: schools, error } = await supabase.from("schools").select("*");
+  const { data: schools, error } = await supabaseServer
+    .from("schools")
+    .select("*")
+    .order("id", { ascending: true });
 
   console.log("schools:", schools);
 
